@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+  <title>Cart View</title>
+
+  <link rel="stylesheet" href="../static/bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="../static/bower_components/font-awesome/css/font-awesome.min.css">
+
+</head>
+
+<body ng-app="myApp" ng-controller="myCtrl">
+	<div class="cointaner-fluid">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-9" style="">
+					<div class="castForm">
+						<h2>Items List</h2>
+						<div class="items">
+							<table class="table" style="padding-top:10px; padding-bottom:10px;">
+									<tr>
+										<th>Name </th>
+										<th>Price </th>
+										<th>Vat in % </th>
+										<th>Description </th>							
+										<th>Add</th>
+										
+									</tr>
+									<tr ng-repeat="item in item_list">
+										<td> 
+											{{ item.name}}
+										</td>
+										<td> 
+											{{ item.price}}
+										</td>
+										<td> 
+											{{ item.vat}}
+										</td>
+										<td> 
+											{{ item.description}}
+										</td>
+										<td> 
+					                        <button ng-if="item.quantity === 0" ng-click="addItem(item) || increaseQuantity(item)">Add to Cart
+	                       					</button>
+
+					                        <button ng-if="item.quantity > 0" ng-click="increaseQuantity(item)">Add to Cart
+	                       					</button>
+										</td>
+									</tr>
+							</table>
+							<hr>
+						</div>
+					</div>
+				</div>
+			 	<div class="col-sm-3" style="text-align:center;">
+					<h2>Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></h2>
+					<div ng-repeat="item in cart_list track by $index">
+				   	    <table style="padding-bottom:10px; padding-top:10px; ">
+		                	<tr >
+			                    <td>Name</td>
+			                    <td>Price</td>
+			                    <td>Quantity</td>
+			                    <td></td>
+		                	</tr>
+		                	<tr>
+			                    <td>{{item.name}}</td>
+			                    <td>{{item.price}}</td>
+			                    <td>{{item.quantity}}</td>
+			                    <td>
+			                        <button ng-click="increaseQuantity(item)">+</button>
+			                        <button ng-click="decreaseQuantity(item)">-</button>
+			                      
+			               		</td>
+                			</tr>
+            			</table>
+				 	</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script rel="stylesheet" src="../static/bower_components/jquery/dist/jquery.min.js"></script>
+    <script rel="stylesheet" src="../static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../static/bower_components/angular/angular.min.js"></script>
+
+	<script src="../static/js/cartModel.js"></script>
+
+</body>
+</html>
