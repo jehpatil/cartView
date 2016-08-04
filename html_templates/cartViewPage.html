@@ -9,24 +9,28 @@
 
 </head>
 
-<body ng-app="myApp" ng-controller="myCtrl">
+<body ng-app="myApp" ng-controller="myCtrl" style="background-color:black;">
 	<div class="cointaner-fluid">
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-9" style="">
+				<div class="col-sm-8" style="">
 					<div class="castForm">
-						<h2>Items List</h2>
+						<h2 style="color:red;">Items List</h2>
 						<div class="items">
-							<table class="table" style="padding-top:10px; padding-bottom:10px;">
+							<table class="table" style="background-color:yellow;">
 									<tr>
+										<th>ID </th>
 										<th>Name </th>
 										<th>Price </th>
 										<th>Vat in % </th>
-										<th>Description </th>							
+										<th>Description </th>					
 										<th>Add</th>
 										
 									</tr>
 									<tr ng-repeat="item in item_list">
+										<td> 
+											{{ item.id}}
+										</td>
 										<td> 
 											{{ item.name}}
 										</td>
@@ -40,40 +44,43 @@
 											{{ item.description}}
 										</td>
 										<td> 
-					                        <button ng-if="item.quantity === 0" ng-click="addItem(item) || increaseQuantity(item)">Add to Cart
-	                       					</button>
-
-					                        <button ng-if="item.quantity > 0" ng-click="increaseQuantity(item)">Add to Cart
+					                        <button ng-click="addItem(item) || newTotal(item)">Add to Cart
 	                       					</button>
 										</td>
 									</tr>
 							</table>
-							<hr>
 						</div>
 					</div>
 				</div>
-			 	<div class="col-sm-3" style="text-align:center;">
-					<h2>Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></h2>
+			 	<div class="col-sm-4" style="text-align:center;">
+					<h2 style="color:red;">Cart <i style="color:red;" class="fa fa-shopping-cart" aria-hidden="true"></i></h2>
+				    <div style="font-size:18px; color:red;" ng-show="cart_list.length<=0"> Cart Is Empty </div>
 					<div ng-repeat="item in cart_list track by $index">
-				   	    <table style="padding-bottom:10px; padding-top:10px; ">
-		                	<tr >
+
+				   	    <table style="background-color:yellow;">
+		                	<tr>
 			                    <td>Name</td>
-			                    <td>Price</td>
 			                    <td>Quantity</td>
-			                    <td></td>
-		                	</tr>
+			                    <td>Price</td>
+			                    <td>vat</td>
+			                    <td>Total</td>
+			                </tr>
 		                	<tr>
 			                    <td>{{item.name}}</td>
-			                    <td>{{item.price}}</td>
 			                    <td>{{item.quantity}}</td>
+			                    <td>{{(item.price - ((item.vat * item.price) / 100))}}</td>
+		                    	<td>{{item.vat}}</td>
+		                    	<td>{{item.price * item.quantity}}</td>
 			                    <td>
-			                        <button ng-click="increaseQuantity(item)">+</button>
-			                        <button ng-click="decreaseQuantity(item)">-</button>
-			                      
-			               		</td>
-                			</tr>
+			                        <button ng-click="addItem(item) || newTotal(item)">+</button>
+			                        <button ng-click="deletecCartItem(item) || newTotal(item)">-</button>
+			                    </td>
+			                </tr>
             			</table>
-				 	</div>
+            	 	</div>
+          			<div class="total pull-left" style="color:red; font-size:18px" ng-if="cartTotal > 0">
+           				Cart Total <span>{{cartTotal}}</span>
+           			</div>
 				</div>
 			</div>
 		</div>
